@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>naomak – čalounické lahůdkářství</title>
+  <link rel="icon" href="wp-content/uploads/2021/07/cropped-naomak-wht-sq-32x32.png" sizes="32x32" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #1a1a18;
+      --accent:  #4a7c5f;
+      --cream:   #e8e2d8;
+      --muted:   #9e9890;
+      --border:  rgba(232,226,216,.18);
+    }
+
+    html { font-size: 16px; }
+    body {
+      background: #e8e2d8;
+      color: var(--cream);
+      font-family: 'Georgia', 'Times New Roman', serif;
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── NAV ─────────────────────────────────────────────────── */
+    .site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: #F9F6F1;
+      border-bottom: 1px solid #E8E3D8;
+      padding: 0 48px;
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      list-style: none;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      color: #2C2A25;
+      opacity: .65;
+      transition: opacity .2s;
+    }
+    .nav-links a:hover { opacity: 1; }
+
+    .nav-cart {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #2C2A25;
+      opacity: .65;
+      transition: opacity .2s;
+      cursor: pointer;
+    }
+    .nav-cart:hover { opacity: 1; }
+    .nav-cart svg { flex-shrink: 0; }
+
+    /* ─── HERO ────────────────────────────────────────────────── */
+    .hero-section {
+      position: relative;
+      width: 100%;
+      height: 90vh;
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-photo {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 30%,
+        rgba(26,26,24,.55) 60%,
+        rgba(26,26,24,.92) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      padding: 0 48px 56px;
+    }
+
+    .hero-title {
+      font-size: clamp(3rem, 7vw, 7rem);
+      font-weight: 400;
+      letter-spacing: -.01em;
+      line-height: 1.0;
+      color: var(--cream);
+      margin-bottom: 40px;
+    }
+
+    .hero-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .hero-tagline {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .95rem;
+      color: var(--cream);
+      opacity: .7;
+      max-width: 420px;
+      line-height: 1.7;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      padding: 14px 36px;
+      background: var(--accent);
+      color: var(--cream);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      border: none;
+      cursor: pointer;
+      transition: background .2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .btn-primary:hover { background: #3d6b50; }
+
+    /* ─── CATEGORY GRID ───────────────────────────────────────── */
+.category-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      width: 100%;
+    }
+
+    .category-tile {
+      position: relative;
+      height: 56vw;
+      max-height: 640px;
+      min-height: 320px;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .category-photo {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      transition: transform .5s ease;
+    }
+
+    .category-tile:hover .category-photo {
+      transform: scale(1.04);
+    }
+
+    .category-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(26,26,24,.75) 100%
+      );
+    }
+
+    .category-body {
+      position: relative;
+      z-index: 1;
+      padding: 40px 48px;
+      width: 100%;
+    }
+
+    .category-label {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .7rem;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 10px;
+    }
+
+    .category-name {
+      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-weight: 400;
+      margin-bottom: 20px;
+      color: var(--cream);
+    }
+
+    .link-outline {
+      display: inline-block;
+      padding: 11px 28px;
+      border: 1px solid rgba(232,226,216,.55);
+      color: var(--cream);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .78rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: border-color .2s, color .2s;
+    }
+    .link-outline:hover {
+      border-color: var(--cream);
+      color: var(--cream);
+    }
+
+    /* ─── PRODUCTS GRID ───────────────────────────────────────── */
+    .products-section {
+      padding: 80px 48px 96px;
+      background: #F9F6F1;
+    }
+
+    .products-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+
+    .products-title {
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 400;
+      letter-spacing: -.01em;
+      color: #2C2A25;
+    }
+
+    .link-arrow {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      transition: color .2s;
+    }
+    .link-arrow:hover { color: #3d6b50; }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .product-card {
+      display: flex;
+      flex-direction: column;
+      cursor: pointer;
+      background: #fff;
+      border: 1px solid #E8E3D8;
+      overflow: hidden;
+    }
+
+    .product-card:hover .product-photo {
+      transform: scale(1.03);
+    }
+
+    .product-photo-wrap {
+      aspect-ratio: 3/4;
+      overflow: hidden;
+      background: #eee;
+      margin-bottom: 0;
+    }
+
+    .product-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+
+    .product-info {
+      padding: 16px 18px 20px;
+    }
+
+    .product-name {
+      font-size: .95rem;
+      font-weight: 400;
+      margin-bottom: 4px;
+      color: #2C2A25;
+    }
+
+    .product-category {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .72rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: #9e9890;
+      margin-bottom: 10px;
+    }
+
+    .product-price {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .88rem;
+      color: #4A6741;
+      font-weight: 500;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    .site-footer {
+      background: #F0EDE6;
+      border-top: 1px solid #E8E3D8;
+      padding: 48px 48px 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-logo img {
+      height: 28px;
+      width: auto;
+      opacity: .6;
+    }
+
+    .footer-copy {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      font-size: .75rem;
+      letter-spacing: .06em;
+      color: #9e9890;
+      text-align: center;
+    }
+
+    .footer-social {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .footer-social a {
+      display: flex;
+      align-items: center;
+      color: #2C2A25;
+      opacity: .45;
+      transition: opacity .2s;
+    }
+    .footer-social a:hover { opacity: .9; }
+    .footer-social svg { display: block; }
+
+    /* ─── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 900px) {
+      .site-nav   { padding: 0 24px; }
+      .hero-content { padding: 0 24px 40px; }
+      .category-body { padding: 28px 24px; }
+      .products-section { padding: 56px 24px 72px; }
+      .site-footer { padding: 40px 24px 48px; }
+    }
+
+    @media (max-width: 640px) {
+      .nav-links { display: none; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; }
+      .category-grid { grid-template-columns: 1fr; }
+      .category-tile { height: 80vw; }
+      .products-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
+      .products-grid .product-card:last-child { display: none; }
+      .site-footer { flex-wrap: wrap; justify-content: center; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── 1. NAV ──────────────────────────────────────────────── -->
+  <header>
+    <nav class="site-nav">
+      <a class="nav-logo" href="#">
+        <img src="wp-content/uploads/2021/07/naomak-blck.png"
+             alt="naomak"
+             width="116" height="60" />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="#">O naomak</a></li>
+        <li><a href="#">Obchod</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+
+      <a class="nav-cart" href="#">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="1.5"
+             stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 0 1-8 0"/>
+        </svg>
+        Košík (0)
+      </a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ── 2. HERO ────────────────────────────────────────────── -->
+    <section class="hero-section">
+      <div class="hero-photo" style="background-image: url('wp-includes/images/WhatsApp-Image-2021-07-05-at-18.29.21-1.jpeg')" role="img" aria-label="Fotografie čalouněného nábytku"></div>
+
+      <div class="hero-content">
+        <h1 class="hero-title">čalounické<br>lahůdkářství</h1>
+
+        <div class="hero-bottom">
+          <p class="hero-tagline">
+            Renovujeme, znovuoživujeme a tvoříme čalouněný nábytek
+            s péčí, co si zaslouží každý starý kousek.
+          </p>
+          <a class="btn-primary" href="#">přejít do obchodu</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── 3. CATEGORY GRID ──────────────────────────────────── -->
+    <section class="category-grid" aria-label="Kategorie produktů">
+
+      <article class="category-tile">
+        <div class="category-photo" style="background-image: url('wp-includes/images/WhatsApp-Image-2021-07-05-at-18.28.46-1-1.jpeg')" role="img" aria-label="Nábytek před renovací"></div>
+        <div class="category-body">
+          <p class="category-label">kategorie</p>
+          <h2 class="category-name">před renovací</h2>
+          <a class="link-outline" href="#">procházet →</a>
+        </div>
+      </article>
+
+      <article class="category-tile">
+        <div class="category-photo" style="background-image: url('wp-includes/images/WhatsApp-Image-2021-07-05-at-18.30.34.jpeg')" role="img" aria-label="Nábytek po renovaci"></div>
+        <div class="category-body">
+          <p class="category-label">kategorie</p>
+          <h2 class="category-name">po renovaci</h2>
+          <a class="link-outline" href="#">procházet →</a>
+        </div>
+      </article>
+
+    </section>
+
+    <!-- ── 4. PRODUCTS GRID ──────────────────────────────────── -->
+    <section class="products-section">
+      <div class="products-header">
+        <h2 class="products-title">Nové kousky</h2>
+        <a class="link-arrow" href="#">zobrazit vše →</a>
+      </div>
+
+      <div class="products-grid">
+
+        <article class="product-card">
+          <div class="product-photo-wrap">
+            <img class="product-photo"
+                 src="wp-includes/images/WhatsApp-Image-2021-07-05-at-18.28.45-1.jpeg"
+                 alt="Křeslo Antik — lesní mech" />
+          </div>
+          <div class="product-info">
+            <p class="product-category">Po renovaci</p>
+            <h3 class="product-name">Křeslo Antik — lesní mech</h3>
+            <span class="product-price">4 800 Kč</span>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-photo-wrap">
+            <img class="product-photo"
+                 src="wp-includes/images/WhatsApp-Image-2021-07-05-at-18.28.46.jpeg"
+                 alt="Pohovka 60. léta — sametová" />
+          </div>
+          <div class="product-info">
+            <p class="product-category">Před renovací</p>
+            <h3 class="product-name">Pohovka 60. léta — sametová</h3>
+            <span class="product-price">2 200 Kč</span>
+          </div>
+        </article>
+
+        <article class="product-card">
+          <div class="product-photo-wrap">
+            <img class="product-photo"
+                 src="wp-includes/images/WhatsApp-Image-2021-07-05-at-18.28.46-1-1.jpeg"
+                 alt="Taburet — terakota vlna" />
+          </div>
+          <div class="product-info">
+            <p class="product-category">Po renovaci</p>
+            <h3 class="product-name">Taburet — terakota vlna</h3>
+            <span class="product-price">1 600 Kč</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ── 5. FOOTER ─────────────────────────────────────────── -->
+  <footer class="site-footer">
+
+    <a class="footer-logo" href="#">
+      <img src="wp-content/uploads/2021/07/naomak-blck.png"
+           alt="naomak" width="116" height="60" />
+    </a>
+
+    <p class="footer-copy">
+      © 2025 naomak · kočovné experimentální čalounictví
+    </p>
+
+    <div class="footer-social">
+      <a href="https://www.instagram.com/naomak_calounictvi/"
+         target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M12,4.622c2.403,0,2.688,0.009,3.637,0.052c0.877,0.04,1.354,0.187,1.671,0.31
+            c0.42,0.163,0.72,0.358,1.035,0.673c0.315,0.315,0.51,0.615,0.673,1.035
+            c0.123,0.317,0.27,0.794,0.31,1.671c0.043,0.949,0.052,1.234,0.052,3.637
+            s-0.009,2.688-0.052,3.637c-0.04,0.877-0.187,1.354-0.31,1.671
+            c-0.163,0.42-0.358,0.72-0.673,1.035c-0.315,0.315-0.615,0.51-1.035,0.673
+            c-0.317,0.123-0.794,0.27-1.671,0.31c-0.949,0.043-1.233,0.052-3.637,0.052
+            s-2.688-0.009-3.637-0.052c-0.877-0.04-1.354-0.187-1.671-0.31
+            c-0.42-0.163-0.72-0.358-1.035-0.673c-0.315-0.315-0.51-0.615-0.673-1.035
+            c-0.123-0.317-0.27-0.794-0.31-1.671C4.631,14.688,4.622,14.403,4.622,12
+            s0.009-2.688,0.052-3.637c0.04-0.877,0.187-1.354,0.31-1.671
+            c0.163-0.42,0.358-0.72,0.673-1.035c0.315-0.315,0.615-0.51,1.035-0.673
+            c0.317-0.123,0.794-0.27,1.671-0.31C9.312,4.631,9.597,4.622,12,4.622
+            M12,3C9.556,3,9.249,3.01,8.289,3.054C7.331,3.098,6.677,3.25,6.105,3.472
+            C5.513,3.702,5.011,4.01,4.511,4.511c-0.5,0.5-0.808,1.002-1.038,1.594
+            C3.25,6.677,3.098,7.331,3.054,8.289C3.01,9.249,3,9.556,3,12
+            c0,2.444,0.01,2.751,0.054,3.711c0.044,0.958,0.196,1.612,0.418,2.185
+            c0.23,0.592,0.538,1.094,1.038,1.594c0.5,0.5,1.002,0.808,1.594,1.038
+            c0.572,0.222,1.227,0.375,2.185,0.418C9.249,20.99,9.556,21,12,21
+            s2.751-0.01,3.711-0.054c0.958-0.044,1.612-0.196,2.185-0.418
+            c0.592-0.23,1.094-0.538,1.594-1.038c0.5-0.5,0.808-1.002,1.038-1.594
+            c0.222-0.572,0.375-1.227,0.418-2.185C20.99,14.751,21,14.444,21,12
+            s-0.01-2.751-0.054-3.711c-0.044-0.958-0.196-1.612-0.418-2.185
+            c-0.23-0.592-0.538-1.094-1.038-1.594c-0.5-0.5-1.002-0.808-1.594-1.038
+            c-0.572-0.222-1.227-0.375-2.185-0.418C14.751,3.01,14.444,3,12,3L12,3z
+            M12,7.378c-2.552,0-4.622,2.069-4.622,4.622S9.448,16.622,12,16.622
+            s4.622-2.069,4.622-4.622S14.552,7.378,12,7.378z M12,15c-1.657,0-3-1.343-3-3
+            s1.343-3,3-3s3,1.343,3,3S13.657,15,12,15z M16.804,6.116
+            c-0.596,0-1.08,0.484-1.08,1.08s0.484,1.08,1.08,1.08
+            c0.596,0,1.08-0.484,1.08-1.08S17.401,6.116,16.804,6.116z"/>
+        </svg>
+      </a>
+
+      <a href="https://www.facebook.com/naomakupholstery"
+         target="_blank" rel="noopener" aria-label="Facebook">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
+             xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.5 2 2 6.5 2 12c0 5 3.7 9.1 8.4 9.9v-7H7.9V12h2.5V9.8
+            c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.5h-1.3c-1.2 0-1.6.8-1.6 1.6V12
+            h2.8l-.4 2.9h-2.3v7C18.3 21.1 22 17 22 12c0-5.5-4.5-10-10-10z"/>
+        </svg>
+      </a>
+    </div>
+
+  </footer>
+
+</body>
+</html>
