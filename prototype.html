@@ -220,7 +220,7 @@
     }
 
     .category-name {
-      font-size: clamp(1.6rem, 3vw, 2.6rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 400;
       margin-bottom: 20px;
       color: var(--cream);
@@ -242,6 +242,63 @@
       color: var(--cream);
     }
 
+    /* ─── O MNĚ ──────────────────────────────────────────────── */
+    .about-section {
+      background: #F9F6F1;
+      padding: 60px 48px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    .about-photo {
+      width: 100%;
+      aspect-ratio: 4/5;
+      object-fit: cover;
+      display: block;
+    }
+
+    .about-label {
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #6B6660;
+      margin-bottom: 16px;
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: #2C2A25;
+      line-height: 1.2;
+      margin-bottom: 24px;
+    }
+
+    .about-text {
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: 15px;
+      color: #6B6660;
+      line-height: 1.8;
+      margin-bottom: 24px;
+      max-width: 75%;
+    }
+
+    .about-link {
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      transition: color .2s;
+    }
+    .about-link:hover { color: #3d6b50; }
+
     /* ─── PRODUCTS GRID ───────────────────────────────────────── */
     .products-section {
       padding: 80px 48px 96px;
@@ -256,7 +313,7 @@
     }
 
     .products-title {
-      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       font-weight: 400;
       letter-spacing: -.01em;
       color: #2C2A25;
@@ -326,11 +383,76 @@
       margin-bottom: 10px;
     }
 
+    .product-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
     .product-price {
       font-family: 'DM Sans', Arial, sans-serif;
       font-size: 15px;
       color: #4A6741;
       font-weight: 500;
+    }
+
+    .product-more {
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: 12px;
+      letter-spacing: .08em;
+      color: var(--accent);
+      transition: color .2s;
+    }
+    .product-more:hover { color: #3d6b50; }
+
+    /* ─── RENOVACE NA MÍRU ───────────────────────────────────── */
+    .cta-section {
+      background: #F0EDE6;
+      padding: 60px 48px;
+      text-align: center;
+    }
+
+    .cta-label {
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: .75rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: #6B6660;
+      margin-bottom: 16px;
+    }
+
+    .cta-title {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 400;
+      color: #2C2A25;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .cta-text {
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: 16px;
+      color: #6B6660;
+      line-height: 1.75;
+      max-width: 520px;
+      margin: 0 auto 32px;
+    }
+
+    .btn-outline-gold {
+      display: inline-block;
+      padding: 10px 24px;
+      border: 1px solid #2C2A25;
+      color: #2C2A25;
+      font-family: 'DM Sans', Arial, sans-serif;
+      font-size: .8rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      transition: background .2s, color .2s;
+    }
+    .btn-outline-gold:hover {
+      background: #2C2A25;
+      color: var(--cream);
     }
 
     /* ─── FOOTER ──────────────────────────────────────────────── */
@@ -356,7 +478,23 @@
       letter-spacing: .06em;
       color: #9e9890;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
     }
+
+    .footer-legal {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .footer-legal a {
+      color: #9e9890;
+      transition: color .2s;
+    }
+    .footer-legal a:hover { color: #2C2A25; }
 
     .footer-social {
       display: flex;
@@ -379,6 +517,9 @@
       .site-nav   { padding: 0 24px; }
       .hero-content { padding: 0 24px 40px; }
       .category-body { padding: 28px 24px; }
+      .about-section { padding: 48px 24px; }
+      .about-grid { grid-template-columns: 1fr; gap: 32px; }
+      .about-text { max-width: 100%; }
       .products-section { padding: 56px 24px 72px; }
       .site-footer { padding: 40px 24px 48px; }
     }
@@ -577,10 +718,10 @@
 
     </section>
 
-    <!-- ── 4. PRODUCTS GRID ──────────────────────────────────── -->
+    <!-- ── 5. PRODUCTS GRID ──────────────────────────────────── -->
     <section class="products-section">
       <div class="products-header">
-        <h2 class="products-title">Nové kousky</h2>
+        <h2 class="products-title">čerstvá nabídka</h2>
         <a class="link-arrow" href="#">zobrazit vše →</a>
       </div>
 
@@ -595,7 +736,10 @@
           <div class="product-info">
             <p class="product-category">Po renovaci</p>
             <h3 class="product-name">Křeslo Antik — lesní mech</h3>
-            <span class="product-price">4 800 Kč</span>
+            <div class="product-footer">
+              <span class="product-price">4 800 Kč</span>
+              <a class="product-more" href="#">více →</a>
+            </div>
           </div>
         </article>
 
@@ -608,7 +752,10 @@
           <div class="product-info">
             <p class="product-category">Před renovací</p>
             <h3 class="product-name">Pohovka 60. léta — sametová</h3>
-            <span class="product-price">2 200 Kč</span>
+            <div class="product-footer">
+              <span class="product-price">2 200 Kč</span>
+              <a class="product-more" href="#">více →</a>
+            </div>
           </div>
         </article>
 
@@ -621,16 +768,42 @@
           <div class="product-info">
             <p class="product-category">Po renovaci</p>
             <h3 class="product-name">Taburet — terakota vlna</h3>
-            <span class="product-price">1 600 Kč</span>
+            <div class="product-footer">
+              <span class="product-price">1 600 Kč</span>
+              <a class="product-more" href="#">více →</a>
+            </div>
           </div>
         </article>
 
       </div>
     </section>
 
+    <!-- ── 6. RENOVACE NA MÍRU ──────────────────────────────── -->
+    <section class="cta-section">
+      <p class="cta-label">renovace</p>
+      <h2 class="cta-title">zachráníme váš kousek</h2>
+      <p class="cta-text">Máte doma křeslo, pohovku nebo židli, které si zaslouží druhou šanci? Pošlete nám fotku a domluvíme se.</p>
+      <a class="btn-outline-gold" href="#">zjistit více →</a>
+    </section>
+
+    <!-- ── 7. O MNĚ ─────────────────────────────────────────── -->
+    <section class="about-section">
+      <div class="about-grid">
+        <img class="about-photo"
+             src="wp-includes/images/minka.webp"
+             alt="Minka — čalounice naomak" />
+        <div class="about-body">
+          <p class="about-label">o mně</p>
+          <h2 class="about-title">začalo to jednou židlí</h2>
+          <p class="about-text">Začalo to jednou židlí. Baví mě brát kusy, které už nikdo nechce, a vracet jim to, co měly — charakter, pohodlí, příběh. V obchodě jsou hotové kousky připravené k adopci. Máte doma nábytek, kterému chybí druhá šance? Ozvěte se a vdechneme mu nový život.</p>
+          <a class="about-link" href="#">kontaktovat →</a>
+        </div>
+      </div>
+    </section>
+
   </main>
 
-  <!-- ── 5. FOOTER ─────────────────────────────────────────── -->
+  <!-- ── 8. FOOTER ─────────────────────────────────────────── -->
   <footer class="site-footer">
 
     <a class="footer-logo" href="#">
@@ -638,9 +811,14 @@
            alt="naomak" width="116" height="60" />
     </a>
 
-    <p class="footer-copy">
-      © 2025 naomak · kočovné experimentální čalounictví
-    </p>
+    <div class="footer-copy">
+      <p>© 2026 naomak · kočovné experimentální čalounictví</p>
+      <nav class="footer-legal">
+        <a href="#">obchodní podmínky</a>
+        <a href="#">reklamační řád</a>
+        <a href="#">ochrana osobních údajů</a>
+      </nav>
+    </div>
 
     <div class="footer-social">
       <a href="https://www.instagram.com/naomak_calounictvi/"
