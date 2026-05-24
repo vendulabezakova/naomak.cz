@@ -1,0 +1,10 @@
+				@font-face {
+					font-family: 'calif';
+					src: url('8060Calif.woff2') format('woff2'),
+						url('8060Calif.woff') format('woff');
+					  font-display: auto;
+				}
+
+				.calif{font-family: 'calif' !important;}
+
+		
