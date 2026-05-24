@@ -108,12 +108,9 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        transparent 30%,
-        rgba(26,26,24,.55) 60%,
-        rgba(26,26,24,.92) 100%
-      );
+      background:
+        linear-gradient(to right, rgba(0,0,0,.55) 0%, transparent 55%),
+        linear-gradient(to top, rgba(0,0,0,.45) 0%, transparent 45%);
     }
 
     .hero-content {
@@ -133,10 +130,9 @@
 
     .hero-bottom {
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
       gap: 24px;
-      flex-wrap: wrap;
     }
 
     .hero-tagline {
@@ -201,8 +197,9 @@
       inset: 0;
       background: linear-gradient(
         to bottom,
-        transparent 50%,
-        rgba(0,0,0,.6) 100%
+        transparent 30%,
+        rgba(0,0,0,.5) 60%,
+        rgba(0,0,0,.85) 100%
       );
     }
 
@@ -386,8 +383,105 @@
       .site-footer { padding: 40px 24px 48px; }
     }
 
+    .nav-hamburger { display: none; }
+    .mobile-menu   { display: none; }
+
     @media (max-width: 640px) {
+      /* nav: 3-sloupcový grid na mobilu */
+      .site-nav {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        padding: 0 20px;
+      }
+      .nav-logo { justify-self: start; }
       .nav-links { display: none; }
+
+      .nav-cart {
+        justify-self: center;
+        gap: 4px;
+        font-size: .75rem;
+      }
+      .nav-cart-label { display: none; }
+
+      .nav-hamburger {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-end;
+        gap: 5px;
+        justify-self: end;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 4px 0;
+        width: 28px;
+      }
+      .nav-hamburger span {
+        display: block;
+        height: 1.5px;
+        background: #2C2A25;
+        transition: transform .25s, opacity .25s;
+        transform-origin: center;
+      }
+      .nav-hamburger span:nth-child(1) { width: 22px; }
+      .nav-hamburger span:nth-child(2) { width: 16px; }
+      .nav-hamburger span:nth-child(3) { width: 22px; }
+
+      /* stav otevřeno */
+      .nav-hamburger.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); width: 22px; }
+      .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+      .nav-hamburger.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); width: 22px; }
+
+      /* mobilní menu dropdown — překryv, žádný layout shift */
+      .mobile-menu {
+        display: block;
+        position: absolute;
+        top: 72px;
+        left: 0;
+        right: 0;
+        z-index: 99;
+        background: #F9F6F1;
+        border-bottom: 1px solid #E8E3D8;
+        overflow: hidden;
+        max-height: 0;
+        transition: max-height .3s ease;
+      }
+      .mobile-menu.is-open { max-height: 240px; }
+      .mobile-menu ul {
+        list-style: none;
+        padding: 8px 0 16px;
+      }
+      .mobile-menu ul li a {
+        display: block;
+        padding: 14px 24px;
+        font-family: 'DM Sans', Arial, sans-serif;
+        font-size: .85rem;
+        letter-spacing: .12em;
+        text-transform: uppercase;
+        color: #2C2A25;
+        opacity: .7;
+        transition: opacity .2s;
+      }
+      .mobile-menu ul li a:hover { opacity: 1; }
+
+      .hero-photo::after {
+        background: linear-gradient(
+          to top,
+          rgba(0,0,0,.75) 0%,
+          rgba(0,0,0,.35) 45%,
+          transparent 70%
+        );
+      }
+      .category-photo::after {
+        background: linear-gradient(
+          to top,
+          rgba(0,0,0,.85) 0%,
+          rgba(0,0,0,.45) 50%,
+          transparent 75%
+        );
+      }
+
       .hero-bottom { flex-direction: column; align-items: flex-start; }
       .category-grid { grid-template-columns: 1fr; }
       .category-tile { height: 80vw; }
@@ -400,7 +494,7 @@
 <body>
 
   <!-- ── 1. NAV ──────────────────────────────────────────────── -->
-  <header>
+  <header style="position: relative;">
     <nav class="site-nav">
       <a class="nav-logo" href="#">
         <img src="wp-content/uploads/2021/07/naomak-blck.png"
@@ -422,9 +516,23 @@
           <line x1="3" y1="6" x2="21" y2="6"/>
           <path d="M16 10a4 4 0 0 1-8 0"/>
         </svg>
-        Košík (0)
+        <span class="nav-cart-label">Košík </span>(0)
       </a>
+
+      <button class="nav-hamburger" id="nav-hamburger" aria-label="Otevřít menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
     </nav>
+
+    <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+      <ul>
+        <li><a href="#">O naomak</a></li>
+        <li><a href="#">Obchod</a></li>
+        <li><a href="#">Kontakt</a></li>
+      </ul>
+    </div>
   </header>
 
   <main>
@@ -584,5 +692,15 @@
 
   </footer>
 
+  <script>
+    const btn  = document.getElementById('nav-hamburger');
+    const menu = document.getElementById('mobile-menu');
+    btn.addEventListener('click', () => {
+      const open = btn.classList.toggle('is-open');
+      menu.classList.toggle('is-open', open);
+      btn.setAttribute('aria-expanded', open);
+      menu.setAttribute('aria-hidden', !open);
+    });
+  </script>
 </body>
 </html>
